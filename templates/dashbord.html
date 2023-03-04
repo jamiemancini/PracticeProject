@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block body %}
+<title>Dashboard</title>
+
+<section class="vh-100" style="background-color: #f7d8de;">
+    <div class="container py-5 h-100">
+<body>
+    <h1>Hello {{ user_name }}, you are logged in.</h1>
+
+    <a href="{{ url_for('register') }}"
+        class="mb-5 pb-lg-2" style="color: #393f81;">Press here to logout</a>
+</body>
+    </div>
+</section>
+
+{% endblock %}
