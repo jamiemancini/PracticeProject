@@ -1,4 +1,7 @@
-from flask import Flask, render_template, url_for, redirect
+import requests
+import config
+
+from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -113,6 +116,42 @@ def register():
 @app.route('/landing')
 def landing():
     return render_template('landing.html')
+
+@app.route('/browse')
+def browse():
+    categories = ['age', 'alone', 'amazing', 'anger', 'architecture', 'art', 'attitude', 'beauty', 'best', 'birthday', 'business', 'cartouch', 'change', 'communications', 'computers', 'cool', 'courage', 'dad', 'dating', 'death', 'design', 'dreams', 'education', 'environmental', 'equality', 'experience', 'failure', 'faith', 'family', 'famous', 'fear', 'fitness', 'food', 'forgiveness', 'freedom', 'friendship', 'funny', 'future', 'god', 'good', 'government', 'graduation', 'great', 'happiness', 'health', 'history', 'home', 'hope', 'humor', 'imagination', 'inspirational', 'intelligence', 'jealousy', 'knowledge', 'leadership', 'learning', 'legal', 'life', 'love', 'marriage', 'medical', 'men', 'mom', 'money', 'morning', 'movies', 'success']
+    return render_template('browse.html', categories=categories)
+
+
+@app.route('/bucket')
+def bucket():
+    api_key = config.API_KEY
+
+    api_url = 'https://api.api-ninjas.com/v1/bucketlist'
+    response = requests.get(api_url, headers={'X-Api-Key': api_key})
+    if response.status_code == requests.codes.ok:
+        bucketlist = response.json()['item']
+    else:
+        bucketlist = ''
+    return render_template('browse.html', bucketlist=bucketlist)
+
+@app.route('/quote', methods=['GET', 'POST'])
+def quote():
+
+    api_key = config.API_KEY
+
+    category=request.form.get('category')
+
+    api_url = 'https://api.api-ninjas.com/v1/quotes?category={}'.format(category)
+    response = requests.get(api_url, headers={'X-Api-Key': api_key})
+    if response.status_code == requests.codes.ok:
+        quote = response.json()[0]['quote']
+        author = response.json()[0]['author']
+    else:
+        quote =''
+        author=''
+    return render_template('browse.html', quote=quote, author=author)
+
 
 @app.route('/base')
 def base():

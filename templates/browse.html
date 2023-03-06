@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  
+
+<section class="vh-90" style="background-color: #9A616D;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-8">
+          
+            
+
+
+    
+            <div class="card mb-3" style="border-radius: 1rem;">
+                <div class="card-header text-center">
+                     <h2> <img src="{{ url_for('static', filename='bucket.svg') }}"
+                         class="img-fluid" style="border-radius: 1rem 0 0 1rem; max-width: 8%; height: 8%;" /> BUCKETLIST</h2>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Fresh new ideas with every click!</h5>
+                  <p class="card-text">Click below to receive suggestions for your bucket list.</p>
+                  <a href="/bucket" class="btn btn-primary">Random bucketlist idea</a>
+                  <hr>
+                  <h3 class="card-title text-center text-dark"><mark>{{ bucketlist }}</mark></h3>
+
+                </div>
+              </div>
+              
+
+                    <div class="card mb-3" style="border-radius: 1rem;">
+                <div class="card-header text-center">
+                    <h2> <img src="{{ url_for('static', filename='quotes.svg') }}"
+                        class="img-fluid" style="border-radius: 1rem 0 0 1rem; max-width: 8%; height: 8%;" />QUOTES</h2>
+                </div>
+
+                <div class="card-body">
+        <h5 class="card-title">Browse quotes by category.</h5>
+        
+        <script>
+            // Your JavaScript code goes here
+            function showDropdown() {
+                document.getElementById("dropdown-menu").classList.toggle("show");
+            }
+
+        </script>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="showDropdown()">
+
+                Select a category
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdown-menu">
+
+                <form action="/quote" method="post">
+                    {% for category in categories %}
+                        <button class="dropdown-item" type="submit" name="category" value="{{ category }}">{{ category }}</button>
+                    {% endfor %}
+                </form>
+                
+            </div>
+        </div>
+        <hr>
+                  <h3 class="card-title text-center text-dark"><mark>{{ quote }}</mark></h3>
+                  <h5 class="card-title text-center text-dark">-{{ author }}</h3>
+        <!-- <a href="/quote" class="btn btn-primary mt-3">Generate a Quote</a> -->
+    </div>
+</div>
+
+
+                </div>
+              </div>
+            
+            
+            
+
+        </div>
+     
+
+</section>
+
+
+{% endblock %}
